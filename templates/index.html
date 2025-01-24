@@ -1,0 +1,128 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+
+        <div class="card chat-card">
+            <div class="card-header bg-secondary text-white d-flex justify-content-between align-items-center" 
+                 role="button" 
+                 data-bs-toggle="collapse" 
+                 data-bs-target="#faqCollapse" 
+                 aria-expanded="false" 
+                 aria-controls="faqCollapse">
+                <h5 class="mb-0">
+                    <i class="fas fa-question-circle me-2"></i> Frequently Asked Questions
+                </h5>
+                <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="collapse" id="faqCollapse">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="faq-item mb-3">
+                                <h6 class="faq-question">
+                                    <i class="fas fa-lightbulb text-warning"></i> Example Questions:
+                                </h6>
+                                <ul class="list-unstyled">
+                                    <li>
+                                        <a href="#" class="example-question text-primary">
+                                            <i class="fas fa-angle-right" aria-hidden="true"></i> 
+                                            Please XL Axiata? Where it located .
+                                        
+                                    </li>                                    
+                                    <li>
+                                        <a href="#" class="example-question text-primary">
+                                            <i class="fas fa-angle-right" aria-hidden="true"></i> 
+                                            Hi, I found an issue where SO 123456 has been paid, but the status in Comet is "Verified Unpaid." Please help check this.
+                                        
+                                    </li>
+                                    <li>
+                                        <a href="#" class="example-question text-primary">
+                                            <i class="fas fa-angle-right" aria-hidden="true"></i> 
+                                            Hi, please check status of WO-INS-24001-2356 .
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#" class="example-question text-primary">
+                                            <i class="fas fa-angle-right" aria-hidden="true"></i> 
+                                            Hi, I encountered an issue where a reservation was canceled, but it already created a WO. What should I do? Please assist.
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#" class="example-question text-primary">
+                                            <i class="fas fa-angle-right" aria-hidden="true"></i> 
+                                            Hi, what is XL Satu? and Who can subscribe this Service?
+                                        </a>
+                                    </li>
+                                </ul>
+                                
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card chat-card">
+            <!-- Header -->
+            <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+                <h5 class="mb-0">Chat with 🤖 Assistant <br>Powered by LLM AWS Bedrock</h5>
+
+                <form method="POST" action="/clear" class="m-0">
+                    <button type="submit" class="btn btn-sm btn-outline-light">
+                        <i class="fas fa-trash"></i> Clear Chat
+                    </button>
+                </form>
+            </div>
+
+            <!-- Chat Body -->
+            <div class="card-body chat-body" id="chatContainer">
+                <div class="chat-history">
+                    {% if chat_history %}
+                        {% for message in chat_history %}
+                            {% if message.role == 'user' %}
+                            <!-- User Message -->
+                            <div class="chat-message user-message d-flex justify-content-end mb-2">
+                                <div class="message-content bg-primary text-white p-2 rounded">
+                                    <div class="message-text">{{ message.content }}</div>
+                                    <div class="message-time text-end text-light small">{{ message.timestamp }}</div>
+                                </div>
+                                <div class="avatar ms-2">
+                                    <span class="emoji" style="font-size: 1.5rem;">😊</span>
+                                </div>
+                            </div>
+                            {% else %}
+                            <!-- Bot Message -->
+                            <div class="chat-message ai-message d-flex justify-content-start mb-2">
+                                <div class="avatar me-2">
+                                    <span class="emoji" style="font-size: 1.5rem;">🤖</span>
+                                </div>
+                                <div class="message-content bg-light text-dark p-2 rounded">
+                                    <div class="message-text">{{ message.content }}</div>
+                                    <div class="message-time text-start text-muted small">{{ message.timestamp }}</div>
+                                </div>
+                            </div>
+                            {% endif %}
+                        {% endfor %}
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Footer -->
+            <div class="card-footer">
+                <form method="POST" action="/">
+                    <div class="input-group">
+                        <input type="text" name="question" class="form-control" placeholder="Type your question here..." required>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-paper-plane"></i> Send
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
